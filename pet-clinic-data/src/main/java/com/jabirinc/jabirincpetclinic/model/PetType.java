@@ -3,7 +3,7 @@ package com.jabirinc.jabirincpetclinic.model;
 /**
  * Created by Getinet on 2019-02-25
  */
-public class PetType {
+public class PetType extends BaseEntity {
 
     private String name;
 
