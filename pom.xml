@@ -14,7 +14,7 @@
     </parent>
     <groupId>com.jabirinc</groupId>
     <artifactId>jabirinc-pet-clinic</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>jabirinc-pet-clinic</name>
     <description>Jabir Inc Pet Clinic Project</description>
 
@@ -44,7 +44,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/GetinetA/jabirinc-pet-clinic.git</developerConnection>
-      <tag>jabirinc-pet-clinic-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
 </project>
