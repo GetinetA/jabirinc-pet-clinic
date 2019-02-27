@@ -14,7 +14,7 @@
     </parent>
     <groupId>com.jabirinc</groupId>
     <artifactId>jabirinc-pet-clinic</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>jabirinc-pet-clinic</name>
     <description>Jabir Inc Pet Clinic Project</description>
 
@@ -33,6 +33,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <goals>install</goals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
@@ -43,7 +44,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/GetinetA/jabirinc-pet-clinic.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>jabirinc-pet-clinic-0.0.2</tag>
   </scm>
 
 </project>
