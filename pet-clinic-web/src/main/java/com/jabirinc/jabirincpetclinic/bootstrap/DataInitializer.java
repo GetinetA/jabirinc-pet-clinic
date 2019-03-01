@@ -4,8 +4,7 @@ import com.jabirinc.jabirincpetclinic.model.Owner;
 import com.jabirinc.jabirincpetclinic.model.Vet;
 import com.jabirinc.jabirincpetclinic.services.OwnerService;
 import com.jabirinc.jabirincpetclinic.services.VetService;
-import com.jabirinc.jabirincpetclinic.services.map.OwnerServiceMap;
-import com.jabirinc.jabirincpetclinic.services.map.VetServiceMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +17,10 @@ public class DataInitializer implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public DataInitializer() {
-        ownerService = new OwnerServiceMap();
-        vetService = new VetServiceMap();
+    @Autowired
+    public DataInitializer(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
