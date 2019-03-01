@@ -1,14 +1,14 @@
 package com.jabirinc.jabirincpetclinic.services.map;
 
 import com.jabirinc.jabirincpetclinic.model.Pet;
-import com.jabirinc.jabirincpetclinic.services.CrudService;
+import com.jabirinc.jabirincpetclinic.services.PetService;
 
 import java.util.Set;
 
 /**
  * Created by Getinet on 2019-02-28
  */
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
 
     @Override
     public Set<Pet> findAll() {
