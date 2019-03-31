@@ -1,6 +1,7 @@
 package com.jabirinc.jabirincpetclinic.bootstrap;
 
 import com.jabirinc.jabirincpetclinic.model.Owner;
+import com.jabirinc.jabirincpetclinic.model.Pet;
 import com.jabirinc.jabirincpetclinic.model.PetType;
 import com.jabirinc.jabirincpetclinic.model.Vet;
 import com.jabirinc.jabirincpetclinic.services.OwnerService;
@@ -9,6 +10,8 @@ import com.jabirinc.jabirincpetclinic.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 /**
  * Created by Getinet on 2019-03-01
@@ -45,12 +48,32 @@ public class DataInitializer implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
+        owner1.setAddress("15625 42nd Ave S");
+        owner1.setCity("Tukwila");
+        owner1.setTelephone("206abcwxyz");
+
+        Pet mikesPet = new Pet();
+        mikesPet.setName("Rosco");
+        mikesPet.setBirthDate(LocalDate.of(2015,1,5));
+        mikesPet.setPetType(savedDogPetType);
+        mikesPet.setOwner(owner1);
+        owner1.getPets().add(mikesPet);
 
         ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Fiona");
         owner2.setLastName("Glenanne");
+        owner2.setAddress("15625 42nd Ave S");
+        owner2.setCity("Tukwila");
+        owner2.setTelephone("206abcwxyz");
+
+        Pet fionasCat = new Pet();
+        fionasCat.setName("Chelse");
+        fionasCat.setBirthDate(LocalDate.of(2016,12,5));
+        fionasCat.setPetType(savedCatPetType);
+        fionasCat.setOwner(owner2);
+        owner2.getPets().add(fionasCat);
 
         ownerService.save(owner2);
 
