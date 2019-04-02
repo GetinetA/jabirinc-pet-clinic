@@ -1,11 +1,9 @@
 package com.jabirinc.jabirincpetclinic.bootstrap;
 
-import com.jabirinc.jabirincpetclinic.model.Owner;
-import com.jabirinc.jabirincpetclinic.model.Pet;
-import com.jabirinc.jabirincpetclinic.model.PetType;
-import com.jabirinc.jabirincpetclinic.model.Vet;
+import com.jabirinc.jabirincpetclinic.model.*;
 import com.jabirinc.jabirincpetclinic.services.OwnerService;
 import com.jabirinc.jabirincpetclinic.services.PetTypeService;
+import com.jabirinc.jabirincpetclinic.services.SpecialityService;
 import com.jabirinc.jabirincpetclinic.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,18 +20,30 @@ public class DataInitializer implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
     @Autowired
     public DataInitializer(OwnerService ownerService,
                            VetService vetService,
-                           PetTypeService petTypeService) {
+                           PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        int count = petTypeService.findAll().size();
+
+        if (count == 0) {
+            loadDate();
+        }
+
+    }
+
+    private void loadDate() {
 
         PetType dog = new PetType();
         dog.setName("Dog");
@@ -44,6 +54,18 @@ public class DataInitializer implements CommandLineRunner {
         PetType savedCatPetType = petTypeService.save(cat);
 
         System.out.println("Loaded PetTypes....");
+
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        Speciality radiologySaved = specialityService.save(radiology);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        Speciality surgerySaved = specialityService.save(surgery);
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("Dentistry");
+        Speciality dentistrySaved = specialityService.save(dentistry);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
@@ -82,12 +104,14 @@ public class DataInitializer implements CommandLineRunner {
         Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
+        vet1.getSpecialities().add(radiologySaved);
 
         vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Jessie");
         vet2.setLastName("Porter");
+        vet2.getSpecialities().add(surgerySaved);
 
         vetService.save(vet2);
 
