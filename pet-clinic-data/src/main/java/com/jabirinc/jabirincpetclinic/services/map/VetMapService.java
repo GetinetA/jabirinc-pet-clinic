@@ -11,12 +11,12 @@ import java.util.Set;
  * Created by Getinet on 2019-02-28
  */
 @Service
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 
-    private final SpecialityServiceMap specialityServiceMap;
+    private final SpecialityMapService specialityMapService;
 
-    public VetServiceMap(SpecialityServiceMap specialityServiceMap) {
-        this.specialityServiceMap = specialityServiceMap;
+    public VetMapService(SpecialityMapService specialityServiceMap) {
+        this.specialityMapService = specialityServiceMap;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
 
                 // check if speciality is already persisted; if not save and get id
                 if (speciality.getId() == null) {
-                    Speciality savedSpeciality = specialityServiceMap.save(speciality);
+                    Speciality savedSpeciality = specialityMapService.save(speciality);
                     speciality.setId(savedSpeciality.getId());
                 }
 
