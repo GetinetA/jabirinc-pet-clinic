@@ -6,6 +6,7 @@ import com.jabirinc.jabirincpetclinic.model.PetType;
 import com.jabirinc.jabirincpetclinic.services.OwnerService;
 import com.jabirinc.jabirincpetclinic.services.PetService;
 import com.jabirinc.jabirincpetclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
  * Created by Getinet on 2019-02-27
  */
 @Service
+@Profile({"default", "map"})
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetService petService;

@@ -2,6 +2,7 @@ package com.jabirinc.jabirincpetclinic.services.map;
 
 import com.jabirinc.jabirincpetclinic.model.PetType;
 import com.jabirinc.jabirincpetclinic.services.PetTypeService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
  * Created by Getinet on 2019-03-31
  */
 @Service
+@Profile({"default", "map"})
 public class PetTypeMapService
         extends AbstractMapService<PetType, Long> implements PetTypeService {
 

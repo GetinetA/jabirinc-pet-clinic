@@ -3,6 +3,7 @@ package com.jabirinc.jabirincpetclinic.services.map;
 import com.jabirinc.jabirincpetclinic.model.Speciality;
 import com.jabirinc.jabirincpetclinic.model.Vet;
 import com.jabirinc.jabirincpetclinic.services.VetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
  * Created by Getinet on 2019-02-28
  */
 @Service
+@Profile({"default", "map"})
 public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
 
     private final SpecialityMapService specialityMapService;
