@@ -15,12 +15,56 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
+/**
+ *      ==== How to write correct unit test for controllers ====
+ * While writing junit test for a controller method, we shall keep in mind that:
+ *
+ *      - A unit test is supposed to test only a certain part of code (i.e. code written in controller class),
+ *      so we shall mock all the dependencies injected and used in controller class.
+ *      - If the test utilizes other dependencies (e.g. database/network) then it is integration testing and not
+ *      unit testing.
+ *      - We should not use any webserver otherwise it will make the unit testing slow.
+ *      - Each unit test should be independent of other tests.
+ *      - By definition, unit tests should be fast.
+ *
+ *
+ * @ExtendWith(MockitoExtension.class) – [ Junit 5 ]
+ * MockitoExtension initializes mocks and handles strict stubbings. It is equivalent of the MockitoJUnitRunner [Junit 4].
+ *
+ * @Mock is used for mock creation. It makes the test class more readable. In test class, to process mockito
+ * annotations, MockitoAnnotations.initMocks(testClass) must be used at least once.
+ * If you are using  ExtendWith(MockitoExtension.class)/RunWith(MockitoJUnitRunner.class) then explicit usage of
+ * MockitoAnnotations.initMocks() is not necessary.
+ * Mocks are initialized before each test method. Use @Mock in unit testing where spring test context is not needed.
+ *
+ * @InjectMocks also creates the mock implementation, additionally injects the dependent mocks that are marked with
+ * the annotations @Mock into it.
+ *
+ * MockMVC
+ * MockMVC class is part of Spring MVC test framework which helps in testing the controllers explicitly starting
+ * a Servlet container.
+ *
+ * @WebMvcTest annotation is used for Spring MVC tests. It disables full auto-configuration and instead apply only
+ * configuration relevant to MVC tests. The WebMvcTest annotation auto-configure MockMvc instance as well.
+ * For example:
+ *      @WebMvcTest(OwnerController.class)
+ *      ---
+ *      @Autowired
+ *      MockMvc mockMvc;
+ *      ---
+ *
+ * Using OwnerController.class as parameter, we are asking to initialize only one web controller and you need to
+ * provide remaining dependencies required using Mock objects.
+ *
+ */
 @ExtendWith(MockitoExtension.class)
+//@WebMvcTest(OwnerController.class)
 class OwnerControllerTest {
 
     @Mock
@@ -43,8 +87,16 @@ class OwnerControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(ownerController)
                 .build();
+
+        //alternate for OwnerService Mock annotation
+        //ownerService = mock(OwnerService.class);
     }
 
+    /**
+     * mockMvc.andDo(print()) will print the request and response. This is helpful to get detailed view in
+     * case of error
+     * @throws Exception
+     */
     @Test
     void listOwners() throws Exception {
 
@@ -55,7 +107,11 @@ class OwnerControllerTest {
         mockMvc.perform(get("/owners"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("owners/index"))
+                .andExpect(model().attributeExists("owners"))
                 .andExpect(model().attribute("owners", hasSize(2)));
+
+        // verify that service method findAll() called at least once
+        verify(ownerService, atLeastOnce()).findAll();
     }
 
     @Test
