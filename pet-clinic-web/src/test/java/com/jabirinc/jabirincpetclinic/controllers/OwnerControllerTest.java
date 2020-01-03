@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
@@ -175,6 +176,7 @@ class OwnerControllerTest {
 
     @Test
     void initUpdateOwnerForm() throws Exception {
+
         when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1l).build());
 
         mockMvc.perform(get("/owners/1/edit"))
@@ -185,14 +187,19 @@ class OwnerControllerTest {
         verifyZeroInteractions(ownerService);
     }
 
+    /**
+     * This test checks redirect url with PathVariable and flash attribute
+     * @throws Exception
+     */
     @Test
     void processUpdateOwnerForm() throws Exception {
+
         when(ownerService.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(1l).build());
 
         mockMvc.perform(post("/owners/1/edit"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/owners/1"))
-                .andExpect(model().attributeExists("owner"));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/owners/1"))
+                .andExpect(MockMvcResultMatchers.flash().attributeExists("owner"));
 
         verify(ownerService).save(ArgumentMatchers.any());
     }
